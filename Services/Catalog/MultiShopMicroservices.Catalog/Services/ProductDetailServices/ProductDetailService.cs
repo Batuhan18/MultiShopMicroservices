@@ -15,7 +15,7 @@ namespace MultiShopMicroservices.Catalog.Services.ProductDetailServices
         {
             var client = new MongoClient(_databaseSettings.ConnectionString);
             var database = client.GetDatabase(_databaseSettings.DatabaseName);
-            _productDetailCollection = database.GetCollection<ProductDetail>(_databaseSettings.ProductDetailCollecionName);
+            _productDetailCollection = database.GetCollection<ProductDetail>(_databaseSettings.ProductDetailCollectionName);
             _mapper = mapper;
         }
 
