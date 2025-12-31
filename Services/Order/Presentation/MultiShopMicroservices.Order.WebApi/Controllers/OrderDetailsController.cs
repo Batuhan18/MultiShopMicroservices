@@ -13,10 +13,10 @@ namespace MultiShopMicroservices.Order.WebApi.Controllers
         private readonly GetOrderDetailByIdQueryHandler _getOrderDetailByIdQueryHandler;
         private readonly GetOrderDetailQueryHandler _getOrderDetailQueryHandler;
         private readonly CreateOrderDetailCommandHandler _createOrderDetailCommandHandler;
-        private readonly RemoveOrderDetailQueryCommandHandler _removeOrderDetailQueryCommandHandler;
-        private readonly UpdateOrderDetailQueryCommandHandler _updateOrderDetailQueryCommandHandler;
+        private readonly RemoveOrderDetailCommandHandler _removeOrderDetailQueryCommandHandler;
+        private readonly UpdateOrderDetailCommandHandler _updateOrderDetailQueryCommandHandler;
 
-        public OrderDetailsController(GetOrderDetailByIdQueryHandler getOrderDetailByIdQueryHandler, GetOrderDetailQueryHandler getOrderDetailQueryHandler, CreateOrderDetailCommandHandler createOrderDetailCommandHandler, RemoveOrderDetailQueryCommandHandler removeOrderDetailQueryCommandHandler, UpdateOrderDetailQueryCommandHandler updateOrderDetailQueryCommandHandler)
+        public OrderDetailsController(GetOrderDetailByIdQueryHandler getOrderDetailByIdQueryHandler, GetOrderDetailQueryHandler getOrderDetailQueryHandler, CreateOrderDetailCommandHandler createOrderDetailCommandHandler, RemoveOrderDetailCommandHandler removeOrderDetailQueryCommandHandler, UpdateOrderDetailCommandHandler updateOrderDetailQueryCommandHandler)
         {
             _getOrderDetailByIdQueryHandler = getOrderDetailByIdQueryHandler;
             _getOrderDetailQueryHandler = getOrderDetailQueryHandler;
