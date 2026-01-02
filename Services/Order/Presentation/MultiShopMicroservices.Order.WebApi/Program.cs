@@ -2,11 +2,15 @@ using MultiShopMicroservices.Order.Application.Features.CQRS.Handlers.AddressHan
 using MultiShopMicroservices.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers;
 using MultiShopMicroservices.Order.Application.Interfaces;
 using MultiShopMicroservices.Order.Application.Services;
+using MultiShopMicroservices.Order.Persistence.Context;
+using MultiShopMicroservices.Order.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped(typeof(IRepository<>), typeof(IRepository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddApplicationService(builder.Configuration);
+
+builder.Services.AddDbContext<OrderContext>();
 
 #region
 builder.Services.AddScoped<GetAddressQueryHandler>();

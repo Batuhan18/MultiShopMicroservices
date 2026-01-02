@@ -24,7 +24,7 @@ namespace MultiShopMicroservices.Order.WebApi.Controllers
             _removeOrderDetailQueryCommandHandler = removeOrderDetailQueryCommandHandler;
             _updateOrderDetailQueryCommandHandler = updateOrderDetailQueryCommandHandler;
         }
-
+        [HttpGet]
         public async Task<IActionResult> OrderDetailList()
         {
             var value = await _getOrderDetailQueryHandler.Handle();
