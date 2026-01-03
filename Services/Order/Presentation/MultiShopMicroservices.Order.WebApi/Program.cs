@@ -16,7 +16,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     opt.RequireHttpsMetadata = false;
 });
 
-
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Repository<>).Assembly));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddApplicationService(builder.Configuration);
 
