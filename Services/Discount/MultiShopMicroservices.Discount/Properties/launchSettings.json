@@ -12,9 +12,9 @@
     "MultiShopMicroservices.Discount": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7176;http://localhost:5129",
+      "applicationUrl": "http://localhost:7111",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
