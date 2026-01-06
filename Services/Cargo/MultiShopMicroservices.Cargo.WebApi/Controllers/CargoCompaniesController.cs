@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.Cargo.BusinessLayer.Abstract;
 using MultiShopMicroservices.Cargo.DtoLayer.Dtos.CargoCompanyDtos;
@@ -6,6 +7,7 @@ using MultiShopMicroservices.Cargo.EntityLayer.Concrete;
 
 namespace MultiShopMicroservices.Cargo.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CargoCompaniesController : ControllerBase
@@ -53,6 +55,7 @@ namespace MultiShopMicroservices.Cargo.WebApi.Controllers
         {
             CargoCompany cargoCompany = new CargoCompany()
             {
+                CargoCompanyId=updateCargoCompanyDto.CargoCompanyId,
                 CargoCompanyName = updateCargoCompanyDto.CargoCompanyName
             };
             _cargoCompanyService.TUpdate(cargoCompany);

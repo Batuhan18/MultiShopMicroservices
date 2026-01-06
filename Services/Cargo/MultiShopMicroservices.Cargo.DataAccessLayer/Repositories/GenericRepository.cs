@@ -15,6 +15,8 @@ namespace MultiShopMicroservices.Cargo.DataAccessLayer.Repositories
         public void Delete(int id)
         {
             var values = _context.Set<T>().Find(id);
+            if (values == null)
+                return;
             _context.Set<T>().Remove(values);
             _context.SaveChanges();
         }

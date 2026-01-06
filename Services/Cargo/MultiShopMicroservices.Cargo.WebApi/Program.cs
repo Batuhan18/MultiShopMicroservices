@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MultiShopMicroservices.Cargo.BusinessLayer.Abstract;
 using MultiShopMicroservices.Cargo.BusinessLayer.Concrete;
 using MultiShopMicroservices.Cargo.DataAccessLayer.Abstract;
@@ -5,6 +6,13 @@ using MultiShopMicroservices.Cargo.DataAccessLayer.Concrete;
 using MultiShopMicroservices.Cargo.DataAccessLayer.EntityFramework;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+{
+    opt.Authority = builder.Configuration["IdentityServerUrl"];
+    opt.Audience = "ResourceCargo";
+    opt.RequireHttpsMetadata = false;
+});
 
 builder.Services.AddDbContext<CargoContext>();
 builder.Services.AddScoped<ICargoCompanyDal, EfCargoCompanyDal>();
@@ -34,7 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
