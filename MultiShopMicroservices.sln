@@ -53,6 +53,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontends", "Frontends", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiShopMicroservices.Mikorservis.WebUI", "Frontends\MultiShopMicroservices.Mikorservis.WebUI\MultiShopMicroservices.Mikorservis.WebUI.csproj", "{5CE092C9-6536-43BC-982F-51CD3460F168}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiShopMicroservices.DtoLayer", "Frontends\MultiShopMicroservices.DtoLayer\MultiShopMicroservices.DtoLayer.csproj", "{FA73E3A7-C7A9-4CD9-AFCB-5EB5F168F269}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{5CE092C9-6536-43BC-982F-51CD3460F168}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CE092C9-6536-43BC-982F-51CD3460F168}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CE092C9-6536-43BC-982F-51CD3460F168}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA73E3A7-C7A9-4CD9-AFCB-5EB5F168F269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA73E3A7-C7A9-4CD9-AFCB-5EB5F168F269}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA73E3A7-C7A9-4CD9-AFCB-5EB5F168F269}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA73E3A7-C7A9-4CD9-AFCB-5EB5F168F269}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,6 +148,7 @@ Global
 		{63CCD536-C3BC-4135-8131-22611E39F7B6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{1A1DEBA1-6499-486E-988A-4E99CBE56B35} = {63CCD536-C3BC-4135-8131-22611E39F7B6}
 		{5CE092C9-6536-43BC-982F-51CD3460F168} = {1F9AD91F-6E63-4D67-AD9B-C5815D30950D}
+		{FA73E3A7-C7A9-4CD9-AFCB-5EB5F168F269} = {1F9AD91F-6E63-4D67-AD9B-C5815D30950D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B800D0B-2FA4-4DA1-A9A9-474C80F4F5C1}
