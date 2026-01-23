@@ -1,11 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MultiShopMicroservices.DtoLayer.CatalogDtos.FeatureDtos;
+using Newtonsoft.Json;
 
 namespace MultiShopMicroservices.Mikorservis.WebUI.ViewComponents.DefaultViewComponents
 {
-    public class _FeatureDefaultComponentPartial:ViewComponent
+    public class _FeatureDefaultComponentPartial : ViewComponent
     {
-        public IViewComponentResult Invoke()
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public _FeatureDefaultComponentPartial(IHttpClientFactory httpClientFactory)
         {
+            _httpClientFactory = httpClientFactory;
+        }
+        [Route("Index")]
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync("http://localhost:7110/api/Features");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ResultFeatureDto>>(jsonData);
+                return View(values);
+            }
+
             return View();
         }
     }
