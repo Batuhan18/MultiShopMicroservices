@@ -16,7 +16,6 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.ViewComponents.ProductListVie
 
         public async Task<IViewComponentResult> InvokeAsync(string id)
         {
-            id = "6964f1e35540a33794c3d88e";
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("http://localhost:7110/api/Products/GetProductsWithCategoryByCategoryId?id=" + id);
             if (responseMessage.IsSuccessStatusCode)
