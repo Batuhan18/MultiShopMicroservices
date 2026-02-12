@@ -29,6 +29,14 @@ namespace MultiShopMicroservices.Catalog.Controllers
             var values =await _ProductDetailService.GetByIdProductDetailAsync(id);
             return Ok(values);
         }
+
+        [HttpGet("GetProductDetailByProductId")]
+        public async Task<IActionResult> GetProductDetailByProductId(string id)
+        {
+            var values = await _ProductDetailService.GetByProductIdDetailAsync(id);
+            return Ok(values);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateProductDetail(CreateProductDetailDto createProductDetailDto)
         {
