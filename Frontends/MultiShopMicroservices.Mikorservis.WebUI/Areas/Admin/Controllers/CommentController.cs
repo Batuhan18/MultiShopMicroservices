@@ -1,0 +1,89 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MultiShopMicroservices.DtoLayer.CommentDtos;
+using Newtonsoft.Json;
+using System.Text;
+
+namespace MultiShopMicroservices.Mikorservis.WebUI.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    [AllowAnonymous]
+    [Route("Admin/Comment")]
+    public class CommentController : Controller
+    {
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public CommentController(IHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+
+        [Route("Index")]
+
+        public async Task<IActionResult> Index()
+        {
+            ViewBag.v1 = "Ana Sayfa";
+            ViewBag.v2 = "Yorumlar";
+            ViewBag.v3 = "Yorum Listesi";
+            ViewBag.v0 = "Yorum İşlemleri";
+
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync("https://localhost:7214/api/Comments");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ResultCommentDto>>(jsonData);
+                return View(values);
+            }
+
+            return View();
+        }
+
+        [Route("DeleteComment/{id}")]
+        public async Task<IActionResult> DeleteComment(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.DeleteAsync("https://localhost:7214/api/Comments/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index", "Comment", new { area = "Admin" });
+            }
+            return View();
+        }
+
+        [HttpGet]
+        [Route("UpdateComment/{id}")]
+        public async Task<IActionResult> UpdateComment(string id)
+        {
+            ViewBag.v1 = "Ana Sayfa";
+            ViewBag.v2 = "Yorumlar";
+            ViewBag.v3 = "Yorum Listesi";
+            ViewBag.v0 = "Yorum Güncelleme İşlemleri";
+            var client = _httpClientFactory.CreateClient();
+            var responseMessgae = await client.GetAsync("https://localhost:7214/api/Comments/" + id);
+            if (responseMessgae.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessgae.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<UpdateCommentDto>(jsonData);
+                return View(values);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [Route("UpdateComment/{id}")]
+        public async Task<IActionResult> UpdateComment(UpdateCommentDto updateCommentDto)
+        {
+            updateCommentDto.Status = true;
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(updateCommentDto);
+            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessgae = await client.PutAsync("https://localhost:7214/api/Comments/", stringContent);
+            if (responseMessgae.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index", "Comment", new { area = "Admin" });
+            }
+            return View();
+        }
+    }
+}

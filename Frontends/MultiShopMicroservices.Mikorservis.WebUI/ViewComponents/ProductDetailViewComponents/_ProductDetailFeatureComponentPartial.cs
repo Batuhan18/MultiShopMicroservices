@@ -15,7 +15,7 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.ViewComponents.ProductDetailV
         public async Task<IViewComponentResult> InvokeAsync(string id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessgae = await client.GetAsync("http://localhost:7110/api/Products/" + id);
+            var responseMessgae = await client.GetAsync($"http://localhost:7110/api/Products/" + id);
             if (responseMessgae.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessgae.Content.ReadAsStringAsync();
