@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.Catalog.Dtos.FeatureDtos;
 using MultiShopMicroservices.Catalog.Services.FeatureServices;
 
 namespace MultiShopMicroservices.Catalog.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FeaturesController : ControllerBase

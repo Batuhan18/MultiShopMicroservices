@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.DtoLayer.IdentityDtos.LoginDtos;
 using MultiShopMicroservices.Mikorservis.WebUI.Models;
+using MultiShopMicroservices.Mikorservis.WebUI.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,10 +14,12 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
     public class LoginController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILoginService _loginService;
 
-        public LoginController(IHttpClientFactory httpClientFactory)
+        public LoginController(IHttpClientFactory httpClientFactory, ILoginService loginService)
         {
             _httpClientFactory = httpClientFactory;
+            _loginService = loginService;
         }
 
 
@@ -57,6 +60,7 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
                         };
 
                         await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProps);
+                        var id = _loginService.GetUserId;
                         return RedirectToAction("Index", "Default");
                     }
                 }

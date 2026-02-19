@@ -5,7 +5,7 @@ using MultiShopMicroservices.Catalog.Services.AboutServices;
 
 namespace MultiShopMicroservices.Catalog.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AboutsController : ControllerBase

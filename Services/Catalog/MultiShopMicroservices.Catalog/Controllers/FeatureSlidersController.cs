@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.Catalog.Dtos.FeatureSliderDtos;
 using MultiShopMicroservices.Catalog.Services.FeatureSliderServices;
 
 namespace MultiShopMicroservices.Catalog.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FeatureSlidersController : ControllerBase

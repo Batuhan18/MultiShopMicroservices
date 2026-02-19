@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.Catalog.Dtos.ContactDtos;
 using MultiShopMicroservices.Catalog.Services.ContactServices;
 
 namespace MultiShopMicroservices.Catalog.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class ContactsController : ControllerBase
     {
         private readonly IContactService _ContactService;
