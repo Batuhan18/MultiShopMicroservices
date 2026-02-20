@@ -39,7 +39,8 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Services.Concrete
                 ClientSecret = _clientSettings.MultiShopAdminClient.ClientSecret,
                 UserName = signInDto.Username,
                 Password = signInDto.Password,
-                Address = discoveryEndPoint.TokenEndpoint
+                Address = discoveryEndPoint.TokenEndpoint,
+                Scope="openid profile"
             };
 
             var token = await _httpClient.RequestPasswordTokenAsync(passwordTokenRequest);

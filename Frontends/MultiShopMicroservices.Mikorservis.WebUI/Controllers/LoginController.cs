@@ -80,7 +80,7 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
        // [HttpPost]
         public async Task<IActionResult> SignIn(SignInDto signInDto)
         {
-            signInDto.Username = "ali01";
+            signInDto.Username = "meryem01";
             signInDto.Password = "123456aA*";
             await _identityService.SignIn(signInDto);
             return RedirectToAction("Index", "Test");
