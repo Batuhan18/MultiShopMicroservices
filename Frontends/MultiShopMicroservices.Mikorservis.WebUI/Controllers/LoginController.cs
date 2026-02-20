@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.DtoLayer.IdentityDtos.LoginDtos;
 using MultiShopMicroservices.Mikorservis.WebUI.Models;
 using MultiShopMicroservices.Mikorservis.WebUI.Services;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -15,11 +16,13 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILoginService _loginService;
+        private readonly IIdentityService _identityService;
 
-        public LoginController(IHttpClientFactory httpClientFactory, ILoginService loginService)
+        public LoginController(IHttpClientFactory httpClientFactory, ILoginService loginService, IIdentityService ıdentityService)
         {
             _httpClientFactory = httpClientFactory;
             _loginService = loginService;
+            _identityService = ıdentityService;
         }
 
 
@@ -66,6 +69,21 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
                 }
             }
             return View();
+        }
+
+        //[HttpGet]
+        //public IActionResult SignIn()
+        //{
+        //    return View();
+        //}
+
+       // [HttpPost]
+        public async Task<IActionResult> SignIn(SignInDto signInDto)
+        {
+            signInDto.Username = "ali01";
+            signInDto.Password = "123456aA*";
+            await _identityService.SignIn(signInDto);
+            return RedirectToAction("Index", "Test");
         }
     }
 }
