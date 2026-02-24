@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.DtoLayer.IdentityDtos.LoginDtos;
 using MultiShopMicroservices.Mikorservis.WebUI.Models;
-using MultiShopMicroservices.Mikorservis.WebUI.Services;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -76,7 +75,7 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
             signInDto.Username = "meryem01";
             signInDto.Password = "123456aA*";
             await _identityService.SignIn(signInDto);
-            return RedirectToAction("Index", "Test");
+            return RedirectToAction("Index", "User");
         }
     }
 }

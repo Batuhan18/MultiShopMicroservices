@@ -1,4 +1,4 @@
-﻿namespace MultiShopMicroservices.Mikorservis.WebUI.Services
+﻿namespace MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces
 {
     public interface ILoginService
     {

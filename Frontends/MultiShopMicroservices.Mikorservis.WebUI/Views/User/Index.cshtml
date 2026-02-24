@@ -1,0 +1,16 @@
+﻿@model UserDetailViewModel
+@{
+    Layout = null;
+}
+
+
+<div class="container">
+    <br />
+    <br />
+    <br />
+    <h3>Kullanıcı Profil Bilgisi</h3>
+    <div class="alert alert-info"> Kullanıcı Id: @Model.Id</div>
+    <div class="alert alert-info"> Kullanıcı Adı: @Model.Username</div>
+    <div class="alert alert-info"> Ad Soyad: @Model.Name @Model.Surname</div>
+    <div class="alert alert-info"> Email Adre: @Model.Email</div>
+</div>

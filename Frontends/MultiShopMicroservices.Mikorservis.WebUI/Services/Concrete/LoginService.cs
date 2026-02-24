@@ -1,6 +1,7 @@
-﻿using System.Security.Claims;
+﻿using MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces;
+using System.Security.Claims;
 
-namespace MultiShopMicroservices.Mikorservis.WebUI.Services
+namespace MultiShopMicroservices.Mikorservis.WebUI.Services.Concrete
 {
     public class LoginService : ILoginService
     {
