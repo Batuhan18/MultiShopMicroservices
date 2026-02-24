@@ -12,7 +12,7 @@
     "MultiShopMicroservices.Payment": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:7116",
       "environmentVariables": {

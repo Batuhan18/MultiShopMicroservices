@@ -15,7 +15,7 @@
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
-        "AllowedScopes": [ "CatalogFullPermission" ]
+        "AllowedScopes": ["CatalogFullPermission"]
       }
     },
     //Discount
@@ -144,6 +144,7 @@
         "AllowedScopes": [ "ImagesFullPermission" ]
       }
     }
+
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http:localhost:5000"

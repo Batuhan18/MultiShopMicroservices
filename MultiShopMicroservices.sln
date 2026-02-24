@@ -73,6 +73,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{E56A23
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiShopMicroservices.Images", "Services\Images\MultiShopMicroservices.Images\MultiShopMicroservices.Images.csproj", "{0DE907A0-66D7-45DE-A9D5-B27A3E06CED3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requirements", "Requirements", "{55C9F7C2-484A-4DD9-ADDB-C4F5018B9F49}"
+	ProjectSection(SolutionItems) = preProject
+		OcelotCodeExample.txt = OcelotCodeExample.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
