@@ -107,6 +107,7 @@ namespace MultiShop.IdentityServer
                 ClientId="MultiShopAdminId",
                 ClientName="MultiShop Admin User",
                 AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
+                AllowOfflineAccess=true,
                 ClientSecrets={new Secret("multishopsecret".Sha256())},
                 AllowedScopes={ "OrderFullPermission", "CatalogReadPermission", "DiscountFullPermission", "CatalogFullPermission",
                     "CargoFullPermission","BasketFullPermission","OcelotFullPermission","CommentFullPermission","PaymentFullPermission",

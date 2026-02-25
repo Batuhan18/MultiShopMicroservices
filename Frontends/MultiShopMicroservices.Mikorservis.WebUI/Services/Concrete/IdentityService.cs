@@ -44,7 +44,7 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Services.Concrete
                 ClientSecret = _clientSettings.MultiShopAdminClient.ClientSecret,
                 RefreshToken = refreshToken,
                 Address = discoveryEndPoint.TokenEndpoint,
-                Scope = "openid profile"
+                Scope = "openid profile IdentityServerApi offline_access"
             };
 
             var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
@@ -95,7 +95,7 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Services.Concrete
                 UserName = signInDto.Username,
                 Password = signInDto.Password,
                 Address = discoveryEndPoint.TokenEndpoint,
-                Scope = "openid profile"
+                Scope = "openid profile IdentityServerApi offline_access"
             };
 
             var token = await _httpClient.RequestPasswordTokenAsync(passwordTokenRequest);
