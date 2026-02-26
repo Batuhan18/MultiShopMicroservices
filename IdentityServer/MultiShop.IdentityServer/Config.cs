@@ -81,6 +81,7 @@ namespace MultiShop.IdentityServer
                 ClientId="MultiShopVisitorId",
                 ClientName="MultiShop Visitor User",
                 AllowedGrantTypes=GrantTypes.ClientCredentials,
+                AllowOfflineAccess=true,
                 ClientSecrets={new Secret("multishopsecret".Sha256())},
                 AllowedScopes={ "CatalogReadPermission", "OcelotFullPermission", "ImageFullPermission", "CatalogFullPermission" }
             },
@@ -91,6 +92,7 @@ namespace MultiShop.IdentityServer
                 ClientId="MultiShopManagerId",
                 ClientName="MultiShop Manager User",
                 AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
+                AllowOfflineAccess=true,
                 ClientSecrets={new Secret("multishopsecret".Sha256())},
                 AllowedScopes={  "CatalogFullPermission", "BasketFullPermission", "OcelotFullPermission", "CommentFullPermission", "PaymentFullPermission",
                 "ImageFullPermission",
