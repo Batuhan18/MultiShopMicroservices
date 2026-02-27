@@ -1,110 +1,76 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.DtoLayer.CatalogDtos.FeatureDtos;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.FeatureServices;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace MultiShopMicroservices.Mikorservis.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
     [Route("Admin/Feature")]
     public class FeatureController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IFeatureService _featureService;
 
-        public FeatureController(IHttpClientFactory httpClientFactory)
+        public FeatureController(IFeatureService featureService)
         {
-            _httpClientFactory = httpClientFactory;
+            _featureService = featureService;
         }
-        [Route("Index")]
 
-        public async Task<IActionResult> Index()
+        void FeatureViewBagList()
         {
             ViewBag.v1 = "Ana Sayfa";
             ViewBag.v2 = "Öne Çıkan Alanlar";
             ViewBag.v3 = "Öne Çıkan Alanlar Listesi";
             ViewBag.v0 = "Öne Çıkan Alanlar İşlemleri";
+        }
 
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("http://localhost:7110/api/Features");
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultFeatureDto>>(jsonData);
-                return View(values);
-            }
+        [Route("Index")]
 
-            return View();
+        public async Task<IActionResult> Index()
+        {
+            FeatureViewBagList();
+            var values = await _featureService.GetAllFeatureAsync();
+            return View(values);
         }
         [Route("CreateFeature")]
         [HttpGet]
         public IActionResult CreateFeature()
         {
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Öne Çıkan Alanlar";
-            ViewBag.v3 = "Öne Çıkan Alanlar Listesi";
-            ViewBag.v0 = "Öne Çıkan Alanlar İşlemleri";
+            FeatureViewBagList();
             return View();
         }
         [Route("CreateFeature")]
         [HttpPost]
         public async Task<IActionResult> CreateFeature(CreateFeatureDto createFeatureDto)
         {
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(createFeatureDto);
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("http://localhost:7110/api/Features", stringContent);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Feature", new { area = "Admin" });
-            }
-            return View();
+            await _featureService.CreateFeatureAsync(createFeatureDto);
+
+            return RedirectToAction("Index", "Feature", new { area = "Admin" });
         }
         [Route("DeleteFeature/{id}")]
         public async Task<IActionResult> DeleteFeature(string id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync("http://localhost:7110/api/Features/" + id);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Feature", new { area = "Admin" });
-            }
-            return View();
+            await _featureService.DeleteFeatureAsync(id);
+            return RedirectToAction("Index", "Feature", new { area = "Admin" });
         }
 
         [HttpGet]
         [Route("UpdateFeature/{id}")]
         public async Task<IActionResult> UpdateFeature(string id)
         {
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Öne Çıkan Alanlar";
-            ViewBag.v3 = "Öne Çıkan Alanlar Listesi";
-            ViewBag.v0 = "Öne Çıkan Alanlar İşlemleri";
-            var client = _httpClientFactory.CreateClient();
-            var responseMessgae = await client.GetAsync("http://localhost:7110/api/Features/" + id);
-            if (responseMessgae.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessgae.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<UpdateFeatureDto>(jsonData);
-                return View(values);
-            }
-            return View();
+            FeatureViewBagList();
+            var values = await _featureService.GetByIdFeatureAsync(id);
+            return View(values);
         }
 
         [HttpPost]
         [Route("UpdateFeature/{id}")]
         public async Task<IActionResult> UpdateFeature(UpdateFeatureDto updateFeatureDto)
         {
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(updateFeatureDto);
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessgae = await client.PutAsync("http://localhost:7110/api/Features/", stringContent);
-            if (responseMessgae.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Feature", new { area = "Admin" });
-            }
-            return View();
+            await _featureService.UpdateFeatureAsync(updateFeatureDto);
+            return RedirectToAction("Index", "Feature", new { area = "Admin" });
         }
     }
 }

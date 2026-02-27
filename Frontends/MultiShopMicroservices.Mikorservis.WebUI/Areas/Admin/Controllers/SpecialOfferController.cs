@@ -1,87 +1,59 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.DtoLayer.CatalogDtos.SpecialOfferDtos;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.SpecialOfferServices;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace MultiShopMicroservices.Mikorservis.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
     [Route("Admin/SpecialOffer")]
     public class SpecialOfferController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ISpecialOfferService _specialOfferService;
 
-        public SpecialOfferController(IHttpClientFactory httpClientFactory)
+        public SpecialOfferController(ISpecialOfferService specialOfferService)
         {
-            _httpClientFactory = httpClientFactory;
+            _specialOfferService = specialOfferService;
         }
-        [Route("Index")]
 
-        public async Task<IActionResult> Index()
+        void SpecialOfferViewBagList()
         {
             ViewBag.v1 = "Ana Sayfa";
             ViewBag.v2 = "Özel Teklifler";
             ViewBag.v3 = "Özel Teklif ve Günün İndirimi Listesi";
             ViewBag.v0 = "Özel Teklifler İşlemleri";
+        }
 
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("http://localhost:7110/api/SpecialOffer");
+        [Route("Index")]
 
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+        public async Task<IActionResult> Index()
+        {
+            SpecialOfferViewBagList();
 
-                var values = JsonConvert.DeserializeObject<List<ResultSpecialOfferDto>>(jsonData)
-                             ?? new List<ResultSpecialOfferDto>();
-
-                return View(values);
-            }
-
-            // başarısız olursa bile view NULL gitmesin
-            return View(new List<ResultSpecialOfferDto>());
+            var values = await _specialOfferService.GetAllSpecialOfferAsync();
+            return View(values);
         }
 
         [Route("CreateSpecialOffer")]
         [HttpGet]
         public IActionResult CreateSpecialOffer()
         {
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Özel Teklifler";
-            ViewBag.v3 = "Özel Teklif ve Günün İndirimi Listesi";
-            ViewBag.v0 = "Özel Teklifler İşlemleri";
+            SpecialOfferViewBagList();
             return View();
         }
         [Route("CreateSpecialOffer")]
         [HttpPost]
         public async Task<IActionResult> CreateSpecialOffer(CreateSpecialOfferDto createSpecialOfferDto)
         {
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(createSpecialOfferDto);
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("http://localhost:7110/api/SpecialOffer", stringContent);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "SpecialOffer", new { area = "Admin" });
-            }
-            return View();
+            await _specialOfferService.CreateSpecialOfferAsync(createSpecialOfferDto);
+            return RedirectToAction("Index", "SpecialOffer", new { area = "Admin" });
         }
         [Route("DeleteSpecialOffer/{id}")]
         public async Task<IActionResult> DeleteSpecialOffer(string id)
         {
-            var client = _httpClientFactory.CreateClient();
-
-            // URL formatını düzelt - {id} kullanıyor API
-            var responseMessage = await client.DeleteAsync($"http://localhost:7110/api/SpecialOffer/{id}");
-
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "SpecialOffer", new { area = "Admin" });
-            }
-
-            // return View(); DEĞİL - RedirectToAction kullan
-            TempData["ErrorMessage"] = "Silme işlemi başarısız!";
+            await _specialOfferService.DeleteSpecialOfferAsync(id);
             return RedirectToAction("Index", "SpecialOffer", new { area = "Admin" });
         }
 
@@ -89,46 +61,18 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Areas.Admin.Controllers
         [Route("UpdateSpecialOffer/{id}")]
         public async Task<IActionResult> UpdateSpecialOffer(string id)
         {
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Özel Teklifler";
-            ViewBag.v3 = "Özel Teklif ve Günün İndirimi Listesi";
-            ViewBag.v0 = "Özel Teklifler İşlemleri";
+            SpecialOfferViewBagList();
 
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("http://localhost:7110/api/SpecialOffer/" + id);
-
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<UpdateSpecialOfferDto>(jsonData);
-                return View(values);
-            }
-            return View();
+            var values = await _specialOfferService.GetByIdSpecialOfferAsync(id);
+            return View(values);
         }
 
         [HttpPost]
         [Route("UpdateSpecialOffer/{id}")]
         public async Task<IActionResult> UpdateSpecialOffer(UpdateSpecialOfferDto updateSpecialOfferDto)
         {
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(updateSpecialOfferDto);
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            // ID'Yİ URL'DEN ÇIKAR - API id beklemiyor çünkü
-            var responseMessage = await client.PutAsync(
-                "http://localhost:7110/api/SpecialOffer", // Sonundaki / olmadan
-                stringContent
-            );
-
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "SpecialOffer", new { area = "Admin" });
-            }
-
-            // Hata durumunda mesaj göster
-            var errorContent = await responseMessage.Content.ReadAsStringAsync();
-            ViewBag.ErrorMessage = $"Güncelleme başarısız: {errorContent}";
-            return View(updateSpecialOfferDto);
+            await _specialOfferService.UpdateSpecialOfferAsync(updateSpecialOfferDto);
+            return RedirectToAction("Index", "SpecialOffer", new { area = "Admin" });
         }
 
 
