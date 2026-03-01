@@ -1,31 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.DtoLayer.CatalogDtos.CategoryDtos;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.CategoryServices;
 using Newtonsoft.Json;
 
 namespace MultiShopMicroservices.Mikorservis.WebUI.ViewComponents.DefaultViewComponents
 {
     public class _CategoryDefaultComponentPartial : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ICategoryService _categoryService;
 
-        public _CategoryDefaultComponentPartial(IHttpClientFactory httpClientFactory)
+        public _CategoryDefaultComponentPartial(ICategoryService categoryService)
         {
-            _httpClientFactory = httpClientFactory;
+            _categoryService = categoryService;
         }
-        [Route("Index")]
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("http://localhost:7110/api/Categories");
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
-                return View(values);
-            }
-
-            return View();
+            var values = await _categoryService.GetAllCategoryAsync();
+            return View(values);
         }
     }
 }

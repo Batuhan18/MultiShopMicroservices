@@ -45,9 +45,12 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.Prod
             return values;
         }
 
-        public Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryByCategoryIdAsync(string CategoryId)
+        public async Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryByCategoryIdAsync(string CategoryId)
         {
-            throw new NotImplementedException();
+            var responseMessage = await _httpClient.GetAsync("products/GetProductsWithCategoryByCategoryId/" + CategoryId);
+            responseMessage.EnsureSuccessStatusCode();
+            var values = await responseMessage.Content.ReadFromJsonAsync<List<ResultProductWithCategoryDto>>();
+            return values;
         }
 
         public async Task UpdateProductAsync(UpdateProductDto updateProductDto)

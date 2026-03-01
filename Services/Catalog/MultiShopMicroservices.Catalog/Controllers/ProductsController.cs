@@ -55,7 +55,7 @@ namespace MultiShopMicroservices.Catalog.Controllers
             return Ok(values);
         }
 
-        [HttpGet("GetProductsWithCategoryByCategoryId")]
+        [HttpGet("GetProductsWithCategoryByCategoryId/{id}")]
         public async Task<IActionResult> GetProductsWithCategoryByCategoryId(string id)
         {
             var values = await _ProductService.GetProductsWithCategoryByCategoryIdAsync(id);

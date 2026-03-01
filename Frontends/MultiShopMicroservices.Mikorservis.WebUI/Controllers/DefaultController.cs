@@ -6,8 +6,8 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
     {
         public IActionResult Index()
         {
-            var user = User.Claims;
-            int x;
+            ViewBag.directory1 = "Ana Sayfa";
+            ViewBag.directory2 = "Ürün Listesi";
             return View();
         }
     }

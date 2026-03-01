@@ -1,37 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.SpecialOfferServices;
 using Newtonsoft.Json;
 
 namespace MultiShopMicroservices.Mikorservis.WebUI.ViewComponents.DefaultViewComponents
 {
     public class _SpecialOfferDefaultComponentPartial:ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ISpecialOfferService _specialOfferService;
 
-        public _SpecialOfferDefaultComponentPartial(IHttpClientFactory httpClientFactory)
+        public _SpecialOfferDefaultComponentPartial(ISpecialOfferService specialOfferService)
         {
-            _httpClientFactory = httpClientFactory;
+            _specialOfferService = specialOfferService;
         }
-        [Route("Index")]
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-           
-
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("http://localhost:7110/api/SpecialOffer");
-
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-
-                var values = JsonConvert.DeserializeObject<List<ResultSpecialOfferDto>>(jsonData)
-                             ?? new List<ResultSpecialOfferDto>();
-
-                return View(values);
-            }
-
-            // başarısız olursa bile view NULL gitmesin
-            return View();
+            var values = await _specialOfferService.GetAllSpecialOfferAsync();
+            return View(values);
         }
     }
 }
