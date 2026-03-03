@@ -1,6 +1,25 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MultiShopMicroservice.Comment.Context;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
+
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+{
+    opt.Authority = builder.Configuration["IdentityServerUrl"];
+    opt.Audience = "ResourceComment";
+    opt.RequireHttpsMetadata = false;
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CommentFullPermission", policy =>
+    {
+        policy.RequireClaim("scope", "CommentFullPermission");
+    });
+});
 
 // Add services to the container.
 builder.Services.AddDbContext<CommentContext>();
@@ -19,7 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

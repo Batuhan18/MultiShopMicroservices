@@ -6,9 +6,9 @@ using MultiShopMicroservice.Comment.Entities;
 
 namespace MultiShopMicroservice.Comment.Controllers
 {
+    [Authorize(Policy = "CommentFullPermission")]
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class CommentsController : ControllerBase
     {
         private readonly CommentContext _context;
@@ -41,7 +41,7 @@ namespace MultiShopMicroservice.Comment.Controllers
             return Ok("Yorum başarıyla güncellendi");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteComment(int id)
         {
             var value = _context.UserComments.Find(id);
@@ -57,7 +57,7 @@ namespace MultiShopMicroservice.Comment.Controllers
             return Ok(value);
         }
 
-        [HttpGet("CommentListByProductId")]
+        [HttpGet("CommentListByProductId/{id}")]
         public IActionResult CommentListByProductId(string id)
         {
             var value = _context.UserComments.Where(x => x.ProductId == id).ToList();

@@ -5,6 +5,7 @@ using MultiShopMicroservices.Mikorservis.WebUI.Handlers;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.AboutServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.BrandServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.CategoryServices;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.ContactServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.FeatureServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.OfferDiscountServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.ProductDetailServices;
@@ -12,6 +13,7 @@ using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.ProductI
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.ProductServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.SliderService;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.SpecialOfferServices;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.CommentServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.Concrete;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces;
 using MultiShopMicroservices.Mikorservis.WebUI.Settings;
@@ -114,6 +116,16 @@ builder.Services.AddHttpClient<IProductImageService, ProductImageService>(opt =>
 builder.Services.AddHttpClient<IProductDetailService, ProductDetailService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Catalog.Path}");
+}).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+builder.Services.AddHttpClient<IContactService, ContactService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Catalog.Path}");
+}).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+builder.Services.AddHttpClient<ICommentService, CommentService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Comment.Path}");
 }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
 var app = builder.Build();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShopMicroservices.DtoLayer.CommentDtos;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.CommentServices;
 using Newtonsoft.Json;
 
 namespace MultiShopMicroservices.Mikorservis.WebUI.ViewComponents.ProductDetailViewComponents
@@ -7,15 +8,19 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.ViewComponents.ProductDetailV
     public class _ProductDetailReviewComponentPartial : ViewComponent
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ICommentService _commentService;
 
-        public _ProductDetailReviewComponentPartial(IHttpClientFactory httpClientFactory)
+        public _ProductDetailReviewComponentPartial(IHttpClientFactory httpClientFactory, ICommentService commentService)
         {
             _httpClientFactory = httpClientFactory;
+            _commentService = commentService;
         }
 
 
         public async Task<IViewComponentResult> InvokeAsync(string id)
         {
+            //var values = await _commentService.CommentListByProductId(id);
+            //return View(values);
             try
             {
                 var client = _httpClientFactory.CreateClient();
@@ -38,7 +43,7 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.ViewComponents.ProductDetailV
                 Console.WriteLine($"STACK: {ex.StackTrace}");
                 return View(new List<ResultCommentDto>());
             }
-        
+
         }
     }
 }
