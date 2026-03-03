@@ -1,4 +1,10 @@
-﻿namespace MultiShopMicroservices.Basket.Dtos
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MultiShopMicroservices.DtoLayer.BasketDtos
 {
     public class BasketItemDto
     {

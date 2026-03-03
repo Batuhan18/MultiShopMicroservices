@@ -28,7 +28,7 @@ namespace MultiShop.IdentityServer
             {
                 Scopes={"CargoFullPermission"}
             },
-             new ApiResource ( "ResourceBasket" )
+             new ApiResource ( "ResourceBasket")
             {
                 Scopes={"BasketFullPermission"}
             },
@@ -83,7 +83,7 @@ namespace MultiShop.IdentityServer
                 AllowedGrantTypes=GrantTypes.ClientCredentials,
                 AllowOfflineAccess=true,
                 ClientSecrets={new Secret("multishopsecret".Sha256())},
-                AllowedScopes={ "CatalogReadPermission", "OcelotFullPermission", "ImageFullPermission", "CatalogFullPermission","CommentFullPermission" }
+                AllowedScopes={ "CatalogReadPermission", "OcelotFullPermission", "ImageFullPermission", "CatalogFullPermission","CommentFullPermission", "BasketFullPermission" }
             },
 
             //Manager

@@ -2,6 +2,7 @@ using IdentityModel.AspNetCore.AccessTokenManagement;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MultiShopMicroservices.Mikorservis.WebUI.Handlers;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.BasketService;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.AboutServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.BrandServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.CategoryServices;
@@ -66,6 +67,11 @@ var values = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceA
 builder.Services.AddHttpClient<IUserService, UserService>(opt =>
 {
     opt.BaseAddress = new Uri(values.IdentityServerUrl);
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
+builder.Services.AddHttpClient<IBasketService, BasketService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Basket.Path}");
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
 
 builder.Services.AddHttpClient<ICategoryService, CategoryService>(opt =>

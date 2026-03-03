@@ -95,7 +95,7 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Services.Concrete
                 UserName = signInDto.Username,
                 Password = signInDto.Password,
                 Address = discoveryEndPoint.TokenEndpoint,
-                Scope = "openid profile IdentityServerApi offline_access"
+                Scope = "openid profile IdentityServerApi offline_access BasketFullPermission OrderFullPermission CatalogFullPermission DiscountFullPermission CargoFullPermission CommentFullPermission PaymentFullPermission ImageFullPermission OcelotFullPermission"
             };
 
             var token = await _httpClient.RequestPasswordTokenAsync(passwordTokenRequest);
