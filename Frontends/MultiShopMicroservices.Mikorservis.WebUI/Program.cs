@@ -16,6 +16,7 @@ using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.SliderSe
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.SpecialOfferServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CommentServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.Concrete;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.DiscountServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces;
 using MultiShopMicroservices.Mikorservis.WebUI.Settings;
 
@@ -72,6 +73,11 @@ builder.Services.AddHttpClient<IUserService, UserService>(opt =>
 builder.Services.AddHttpClient<IBasketService, BasketService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Basket.Path}");
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
+builder.Services.AddHttpClient<IDiscountService, DiscountService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Discount.Path}");
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
 
 builder.Services.AddHttpClient<ICategoryService, CategoryService>(opt =>

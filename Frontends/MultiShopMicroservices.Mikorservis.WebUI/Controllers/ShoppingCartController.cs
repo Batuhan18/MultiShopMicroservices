@@ -2,6 +2,7 @@
 using MultiShopMicroservices.DtoLayer.BasketDtos;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.BasketService;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.ProductServices;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.DiscountServices;
 
 namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
 {
@@ -16,8 +17,14 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
             _basketService = basketService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var values = await _basketService.GetBasket();
+            ViewBag.total = values.TotalPrice;
+            var totalPriceWithTax = values.TotalPrice + values.TotalPrice / 100 * 10;
+            ViewBag.totalPriceWithTax = totalPriceWithTax;
+            var tax = values.TotalPrice / 100 * 10;
+            ViewBag.tax = tax;
             return View();
         }
 
@@ -30,7 +37,7 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
                 ProductName = values.ProductName,
                 Price = values.ProductPrice,
                 Quantity = 1,
-                ProductImageUrl=values.ProductImageUrl
+                ProductImageUrl = values.ProductImageUrl
             };
             await _basketService.AddBasketItem(items);
             return RedirectToAction("Index");
