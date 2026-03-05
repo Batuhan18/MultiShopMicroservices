@@ -17,8 +17,11 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
             _basketService = basketService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string code,int discountRate,decimal totalNewPriceWithDiscount)
         {
+            ViewBag.code = code;
+            ViewBag.discountRate = discountRate;
+            ViewBag.totalNewPriceWithDiscount = totalNewPriceWithDiscount;
             var values = await _basketService.GetBasket();
             ViewBag.total = values.TotalPrice;
             var totalPriceWithTax = values.TotalPrice + values.TotalPrice / 100 * 10;

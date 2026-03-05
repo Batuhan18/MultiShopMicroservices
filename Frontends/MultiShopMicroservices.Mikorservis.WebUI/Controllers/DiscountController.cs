@@ -15,15 +15,19 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
         }
         [HttpGet]
         public PartialViewResult ConfirmDicountCoupon()
-        {         
+        {
             return PartialView();
         }
 
         [HttpPost]
-        public IActionResult ConfirmDicountCoupon(string code)
+        public async Task<IActionResult> ConfirmDicountCoupon(string code)
         {
-            var values = _discountService.GetDiscountCode(code);
-            return View(values);
+            var values = await _discountService.GetDiscountCouponRate(code);
+            var basketValues = await _basketService.GetBasket();
+            var totalPriceWithTax = basketValues.TotalPrice + basketValues.TotalPrice / 100 * 10;
+            var totalNewPriceWithDiscount = totalPriceWithTax - (totalPriceWithTax / 100 * values);
+           // ViewBag.totalNewPriceWithDiscount = totalNewPriceWithDiscount;
+            return RedirectToAction("Index", "ShoppingCart", new { code = code, discountRate=values, totalNewPriceWithDiscount= totalNewPriceWithDiscount });
         }
     }
 }
