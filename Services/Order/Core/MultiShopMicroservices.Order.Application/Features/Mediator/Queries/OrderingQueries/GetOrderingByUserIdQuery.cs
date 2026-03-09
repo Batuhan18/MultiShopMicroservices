@@ -1,0 +1,14 @@
+﻿using MediatR;
+using MultiShopMicroservices.Order.Application.Features.Mediator.Results.OrderingResults;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MultiShopMicroservices.Order.Application.Features.Mediator.Queries.OrderingQueries
+{
+    public class GetOrderingByUserIdQuery : IRequest<GetOrderingByUserIdQueryResult>
+    {
+    }
+}
