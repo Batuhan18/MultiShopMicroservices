@@ -2,28 +2,30 @@
 using MultiShopMicroservices.Order.Application.Features.Mediator.Queries.OrderingQueries;
 using MultiShopMicroservices.Order.Application.Features.Mediator.Results.OrderingResults;
 using MultiShopMicroservices.Order.Application.Interfaces;
-using MultiShopMicroservices.Order.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MultiShopMicroservices.Order.Application.Features.Mediator.Handlers.OrderingHandlers
 {
-    public class GetOrderingByUserIdQueryHandler : IRequestHandler<GetOrderingByUserIdQuery, GetOrderingByUserIdQueryResult>
+    public class GetOrderingByUserIdQueryHandler
+    : IRequestHandler<GetOrderingByUserIdQuery, List<GetOrderingByUserIdQueryResult>>
     {
-        public Task<GetOrderingByUserIdQueryResult> Handle(GetOrderingByUserIdQuery request, CancellationToken cancellationToken)
+        private readonly IOrderingRepository _orderingRepository;
+
+        public GetOrderingByUserIdQueryHandler(IOrderingRepository orderingRepository)
         {
-            //var values = await _repository.GetByIdAsync(request.Id);
-            //return new GetOrderingByIdQueryResult
-            //{
-            //    OrderDate = values.OrderDate,
-            //    OrderingId = values.OrderingId,
-            //    TotalPrice = values.TotalPrice,
-            //    UserId = values.UserId
-            //};
-            throw new NotImplementedException();
+            _orderingRepository = orderingRepository;
+        }
+
+        public async Task<List<GetOrderingByUserIdQueryResult>> Handle(GetOrderingByUserIdQuery request, CancellationToken cancellationToken)
+        {
+            var values =  _orderingRepository.GetOrderingsByUserId(request.Id);
+
+            return values.Select(x => new GetOrderingByUserIdQueryResult
+            {
+                OrderDate = x.OrderDate,
+                OrderingId = x.OrderingId,
+                TotalPrice = x.TotalPrice,
+                UserId = x.UserId
+            }).ToList();
         }
     }
 

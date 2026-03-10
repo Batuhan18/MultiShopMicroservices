@@ -19,6 +19,7 @@ using MultiShopMicroservices.Mikorservis.WebUI.Services.Concrete;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.DiscountServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.OrderServices.OrderAddressServices;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.OrderServices.OrderOrderingServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -77,6 +78,11 @@ builder.Services.AddHttpClient<IBasketService, BasketService>(opt =>
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
 
 builder.Services.AddHttpClient<IOrderAddressServices, OrderAddressServices>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}");
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
+builder.Services.AddHttpClient<IOrderOrderingService, OrderOrderingService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}");
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
