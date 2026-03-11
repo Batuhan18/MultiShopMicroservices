@@ -15,7 +15,7 @@
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
-        "AllowedScopes": ["CatalogFullPermission"]
+        "AllowedScopes": [ "CatalogFullPermission" ]
       }
     },
     //Discount
@@ -142,6 +142,25 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
         "AllowedScopes": [ "ImagesFullPermission" ]
+      }
+    },
+
+    //Message
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7118
+        }
+      ],
+      "UpstreamPathTemplate": "/services/message/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamScheme": "http",
+      "AuthenticationOptions": {
+        //"AuthenticationProviderKey": "OcelotAuthenticationScheme",
+        "AllowedScopes": [ "MessageFullPermission" ]
       }
     }
 

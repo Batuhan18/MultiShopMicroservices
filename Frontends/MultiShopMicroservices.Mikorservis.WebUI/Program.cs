@@ -18,6 +18,7 @@ using MultiShopMicroservices.Mikorservis.WebUI.Services.CommentServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.Concrete;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.DiscountServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.MessageServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.OrderServices.OrderAddressServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.OrderServices.OrderOrderingServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Settings;
@@ -85,6 +86,11 @@ builder.Services.AddHttpClient<IOrderAddressServices, OrderAddressServices>(opt 
 builder.Services.AddHttpClient<IOrderOrderingService, OrderOrderingService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}");
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
+builder.Services.AddHttpClient<IMessageService, MessageService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Message.Path}");
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
 
 builder.Services.AddHttpClient<IDiscountService, DiscountService>(opt =>
