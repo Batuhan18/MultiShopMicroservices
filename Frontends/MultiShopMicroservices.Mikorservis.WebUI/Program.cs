@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MultiShopMicroservices.Mikorservis.WebUI.Handlers;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.BasketService;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.CargoServices.CargoCompanyServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.AboutServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.BrandServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.CategoryServices;
@@ -21,6 +22,7 @@ using MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.MessageServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.OrderServices.OrderAddressServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.OrderServices.OrderOrderingServices;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.UserIdentityServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -88,6 +90,11 @@ builder.Services.AddHttpClient<IOrderOrderingService, OrderOrderingService>(opt 
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}");
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
 
+builder.Services.AddHttpClient<ICargoCompanyService, CargoCompanyService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Cargo.Path}");
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
 builder.Services.AddHttpClient<IMessageService, MessageService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Message.Path}");
@@ -96,6 +103,11 @@ builder.Services.AddHttpClient<IMessageService, MessageService>(opt =>
 builder.Services.AddHttpClient<IDiscountService, DiscountService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Discount.Path}");
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
+builder.Services.AddHttpClient<IUserIdentityService, UserIdentityService>(opt =>
+{
+    opt.BaseAddress = new Uri(values.IdentityServerUrl);
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
 
 builder.Services.AddHttpClient<ICategoryService, CategoryService>(opt =>
