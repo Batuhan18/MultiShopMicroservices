@@ -23,6 +23,7 @@ using MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.MessageServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.OrderServices.OrderAddressServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.OrderServices.OrderOrderingServices;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.StatisticServices.CatalogStatisticServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.UserIdentityServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Settings;
 
@@ -74,6 +75,11 @@ var values = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceA
 builder.Services.AddHttpClient<IUserService, UserService>(opt =>
 {
     opt.BaseAddress = new Uri(values.IdentityServerUrl);
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
+builder.Services.AddHttpClient<ICatalogStatisticService, CatalogStatisticService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Catalog.Path}");
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
 
 builder.Services.AddHttpClient<IBasketService, BasketService>(opt =>

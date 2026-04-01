@@ -54,7 +54,7 @@ namespace MultiShopMicroservices.Catalog.Services.StatisticsServices
             {
                 new BsonDocument("$group",new BsonDocument
                 {
-                    {"_id",null },
+                    {"_id",BsonNull.Value },
                     {"averagePrice",new BsonDocument("$avg","$ProductPrice") }
                 })
             };

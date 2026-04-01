@@ -29,8 +29,8 @@ namespace MultiShopMicroservices.Catalog.Controllers
             return Ok(value);
         }
 
-        [HttpGet("GetPrdouctCount")]
-        public async Task<IActionResult> GetPrdouctCount()
+        [HttpGet("GetProductCount")]
+        public async Task<IActionResult> GetProductCount()
         {
             var value = await _statisticService.GetProductCount();
             return Ok(value);
