@@ -12,6 +12,7 @@ using MultiShopMicroservices.Catalog.Services.ProductDetailServices;
 using MultiShopMicroservices.Catalog.Services.ProductImageServices;
 using MultiShopMicroservices.Catalog.Services.ProductServices;
 using MultiShopMicroservices.Catalog.Services.SpecialOfferServices;
+using MultiShopMicroservices.Catalog.Services.StatisticsServices;
 using MultiShopMicroservices.Catalog.Settings;
 using System.Reflection;
 
@@ -36,6 +37,7 @@ builder.Services.AddScoped<IOfferDiscountService, OfferDiscountService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IAboutService, AboutService>();
 builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IStatisticService, StatisticService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

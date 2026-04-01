@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.CargoServices.CargoCustomerServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.Interfaces;
 
 namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
@@ -17,5 +18,7 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Controllers
             var values = await _userService.GetUserInfo();
             return View(values);
         }
+
+     
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MultiShopMicroservices.Mikorservis.WebUI.Handlers;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.BasketService;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CargoServices.CargoCompanyServices;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.CargoServices.CargoCustomerServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.AboutServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.BrandServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.CatalogServices.CategoryServices;
@@ -91,6 +92,11 @@ builder.Services.AddHttpClient<IOrderOrderingService, OrderOrderingService>(opt 
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
 
 builder.Services.AddHttpClient<ICargoCompanyService, CargoCompanyService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Cargo.Path}");
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
+builder.Services.AddHttpClient<ICargoCustomerService, CargoCustomerService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Cargo.Path}");
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
