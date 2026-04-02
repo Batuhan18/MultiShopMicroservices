@@ -24,6 +24,9 @@ using MultiShopMicroservices.Mikorservis.WebUI.Services.MessageServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.OrderServices.OrderAddressServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.OrderServices.OrderOrderingServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.StatisticServices.CatalogStatisticServices;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.StatisticServices.DiscountStatisticServices;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.StatisticServices.MessageStatisticServices;
+using MultiShopMicroservices.Mikorservis.WebUI.Services.StatisticServices.UserStatisticServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Services.UserIdentityServices;
 using MultiShopMicroservices.Mikorservis.WebUI.Settings;
 
@@ -80,6 +83,21 @@ builder.Services.AddHttpClient<IUserService, UserService>(opt =>
 builder.Services.AddHttpClient<ICatalogStatisticService, CatalogStatisticService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Catalog.Path}");
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
+builder.Services.AddHttpClient<IMessageStatisticService, MessageStatisticService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Message.Path}");
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
+builder.Services.AddHttpClient<IDiscountStatisticService, DiscountStatisticService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Discount.Path}");
+}).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
+
+builder.Services.AddHttpClient<IUserStatisticService, UserStatisticService>(opt =>
+{
+    opt.BaseAddress = new Uri(values.IdentityServerUrl);
 }).AddHttpMessageHandler<ResourceOwnerPassWordTokenHandler>();
 
 builder.Services.AddHttpClient<IBasketService, BasketService>(opt =>

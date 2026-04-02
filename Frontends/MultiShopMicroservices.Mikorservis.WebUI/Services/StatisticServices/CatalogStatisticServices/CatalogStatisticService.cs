@@ -26,14 +26,14 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Services.StatisticServices.Ca
         public async Task<string> GetMaxPriceProductName()
         {
             var responseMessage = await _httpClient.GetAsync("Statistics/GetMaxPriceProductName");
-            var values = await responseMessage.Content.ReadFromJsonAsync<string>();
+            var values = await responseMessage.Content.ReadAsStringAsync();
             return values;
         }
 
         public async Task<string> GetMinPriceProductName()
         {
             var responseMessage = await _httpClient.GetAsync("Statistics/GetMinPriceProductName");
-            var values = await responseMessage.Content.ReadFromJsonAsync<string>();
+            var values = await responseMessage.Content.ReadAsStringAsync();
             return values;
         }
 

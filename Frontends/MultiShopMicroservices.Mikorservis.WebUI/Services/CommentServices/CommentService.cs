@@ -29,6 +29,13 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Services.CommentServices
             await _httpClient.DeleteAsync($"comments?id={id}");
         }
 
+        public async Task<int> GetActiveCommentCount()
+        {
+            var responseMessage = await _httpClient.GetAsync("comments/GetActiveCommentCount");
+            var values = await responseMessage.Content.ReadFromJsonAsync<int>();
+            return values;
+        }
+
         public async Task<List<ResultCommentDto>> GetAllCommentAsync()
         {
             var responseMessage = await _httpClient.GetAsync("comments");
@@ -41,6 +48,20 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Services.CommentServices
             var responseMessage = await _httpClient.GetAsync("comments/" + id);
             responseMessage.EnsureSuccessStatusCode();
             var values = await responseMessage.Content.ReadFromJsonAsync<UpdateCommentDto>();
+            return values;
+        }
+
+        public async Task<int> GetPassiveCommentCount()
+        {
+            var responseMessage = await _httpClient.GetAsync("comments/GetPassiveCommentCount");
+            var values = await responseMessage.Content.ReadFromJsonAsync<int>();
+            return values;
+        }
+
+        public async Task<int> GetTotalCommentCount()
+        {
+            var responseMessage = await _httpClient.GetAsync("comments/GetTotalCommentCount");
+            var values = await responseMessage.Content.ReadFromJsonAsync<int>();
             return values;
         }
 
