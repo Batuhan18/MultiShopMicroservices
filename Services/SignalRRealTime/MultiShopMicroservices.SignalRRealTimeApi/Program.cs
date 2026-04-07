@@ -1,8 +1,12 @@
 using MultiShopMicroservices.SignalRRealTimeApi.Hubs;
+using MultiShopMicroservices.SignalRRealTimeApi.Services.SignalRCommentServices;
+using MultiShopMicroservices.SignalRRealTimeApi.Services.SignalRMessageServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddHttpClient();
 
 builder.Services.AddCors(opt =>
 {
@@ -11,6 +15,11 @@ builder.Services.AddCors(opt =>
         builder.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed((host) => true).AllowCredentials();
     });
 });
+
+
+builder.Services.AddScoped<ISignalRCommentService, SignalRCommentService>();
+builder.Services.AddScoped<ISignalRMessageServices, SignalRMessageService>();
+
 
 builder.Services.AddSignalR();
 

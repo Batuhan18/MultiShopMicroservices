@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
 }
@@ -13,7 +12,7 @@
 <div class="container">
     <br />
     <br />
-    
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -24,7 +23,11 @@
 
                             connection.start().then(()=>{
                                 $("#connstatus").text(connection.state);
+                                connection.invoke("SendStatisticCount");
                             }).catch((err)=>{console.log(err)});
+                            connection.on("ReceiveCommentCount",(value)=>{
+                                $("#commentcount").text(value);
+                            })
                     });
                 </script>
             </div>
@@ -43,6 +46,7 @@
                 <div class="bs-example" data-example-id="bordered-table">
                     <div class="col-md-8 offset-2">
                         <div class="alert alert-primary">Bağlantının Durumu:<strong id="connstatus"></strong></div>
+                        <div class="alert alert-primary">Yorum Sayısı:<strong id="commentcount"></strong></div>
                     </div>
                 </div>
             </div>

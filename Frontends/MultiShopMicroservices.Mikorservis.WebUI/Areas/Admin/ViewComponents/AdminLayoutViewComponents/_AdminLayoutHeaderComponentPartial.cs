@@ -24,8 +24,8 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Areas.Admin.ViewComponents.Ad
             int messageCount =await  _messageService.GetTotalMessageCountByReceiverId(user.Id);
             ViewBag.messageCount = messageCount;
 
-            int totalCommentCount = await _commentService.GetTotalCommentCount();
-            ViewBag.totalCommentCount = totalCommentCount;
+            //int totalCommentCount = await _commentService.GetTotalCommentCount();
+            //ViewBag.totalCommentCount = totalCommentCount;
             return View();
         }
     }
