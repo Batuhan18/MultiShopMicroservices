@@ -24,5 +24,12 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Services.MessageServices
             var values = await responseMessage.Content.ReadFromJsonAsync<List<ResultSendboxMessageDto>>();
             return values;
         }
+
+        public async Task<int> GetTotalMessageCountByReceiverId(string id)
+        {
+            var responseMessage = await _httpClient.GetAsync("UserMessage/GetTotalMessageCountByReceiverId?id=" + id);
+            var values = await responseMessage.Content.ReadFromJsonAsync<int>();
+            return values;
+        }
     }
 }

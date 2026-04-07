@@ -6,5 +6,6 @@ namespace MultiShopMicroservices.Mikorservis.WebUI.Services.MessageServices
     {
         Task<List<ResultInboxMessageDto>> GetInboxMessageAsync(string id);
         Task<List<ResultSendboxMessageDto>> GetSendBoxMessageAsync(string id);
+        Task<int> GetTotalMessageCountByReceiverId(string id);
     }
 }
