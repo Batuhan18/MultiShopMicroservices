@@ -48,7 +48,27 @@ namespace MultiShopMicroservices.RapidApiWebUI.Controllers
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<ExchangeViewModel>(body);
-                ViewBag.cityTemp = values.temp.ToString();
+                ViewBag.exchangeRateUsd = values.exchange_rate.ToString();
+              
+            }
+
+            var client2 = new HttpClient();
+            var request2 = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://real-time-finance-data.p.rapidapi.com/currency-exchange-rate?from_symbol=EUR&to_symbol=TRY&language=en"),
+                Headers =
+    {
+        { "x-rapidapi-key", "d4a58d4634mshef481a542f465a0p11b614jsn299da005958a" },
+        { "x-rapidapi-host", "real-time-finance-data.p.rapidapi.com" },
+    },
+            };
+            using (var response = await client2.SendAsync(request2))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<ExchangeViewModel>(body);
+                ViewBag.exchangeRateEuro = values.exchange_rate.ToString();
                 return View();
             }
         }
